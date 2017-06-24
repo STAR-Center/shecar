@@ -1,0 +1,118 @@
+############### Input/Output ###############
+# Input/output files.
+# Set these if a matches file is not present. Images should be a filepath with a
+# wildcard e.g., /home/my_username/my_images/*.jpg
+
+--images=data/monocular/*.jpg
+--output_matches_file=data/monocular/match.matches
+
+--hand_poses_file=data/monocular/handposes.txt
+# If a matches file has already been created, set the filepath here. This avoids
+# having to recompute all features and matches.
+#--matches_file=match.matches
+
+# The calibration file indicates possibly known calibration e.g, from EXIF or
+# explicit calibration. Theia attempts to extract EXIF focal lengths if calibration
+# is not supplied for a given image.
+--calibration_file=data/monocular/intrinsic.txt
+--output_reconstruction=data/monocular/output
+
+############### Multithreading ###############
+# Set to the number of threads you want to use.
+--num_threads=8
+
+############### Feature Extraction ###############
+--descriptor=SIFT
+--feature_density=NORMAL
+
+############### Matching Options ###############
+# Perform matching out-of-core. If set to true, the matching_working_directory
+# must be set to a valid, writable directory (the directory will be created if
+# it does not exits) Set to false to perform all-in-memory matching.
+--match_out_of_core=false
+
+# During feature matching we utilize an LRU cache for out-of-core matching. The size
+# of that cache (in terms of number of images) is controlled by this parameter. The
+# higher this number the more memory is required.
+--matching_max_num_images_in_cache=256
+
+--matching_strategy=CASCADE_HASHING
+#--matching_strategy=BRUTE_FORCE
+--lowes_ratio=0.8
+--min_num_inliers_for_valid_match=30
+--max_sampson_error_for_verified_match=1.0
+--bundle_adjust_two_view_geometry=true
+--keep_only_symmetric_matches=false
+
+############### General SfM Options ###############
+--reconstruction_estimator=INCREMENTAL
+--min_track_length=2
+--max_track_length=50
+--reconstruct_largest_connected_component=false
+
+# Set to true if all views were captured with the same camera. If true, then a
+# single set of camera intrinsic parameters will be used for all views in the
+# reconstruction.
+--shared_calibration=true
+
+# If set to true, only views with known calibration are reconstructed.
+--only_calibrated_views=false
+
+############### Global SfM Options ###############
+--global_position_estimator=LEAST_UNSQUARED_DEVIATION
+--global_rotation_estimator=ROBUST_L1L2
+--post_rotation_filtering_degrees=15.0
+
+# This refinement is very unstable for rotation-only motions so
+# it is advised that this is set to false for these motions.
+--refine_relative_translations_after_rotation_estimation=true
+
+# If true, only cameras that are well-conditioned for position estimation will
+# be used for global position estimation
+--extract_maximal_rigid_subgraph=false
+
+# Filter the relative translations with the 1DSfM filter to remove potential
+# outliers in the relative pose measurements.
+--filter_relative_translations_with_1dsfm=false
+
+# Nonlinear position estimation options
+--position_estimation_min_num_tracks_per_view=0
+--position_estimation_robust_loss_width=0.1
+
+# After estimating camera poses, we perform trianguation, then BA,
+# then filter out bad points. This controls how many times we repeat
+# this process.
+--num_retriangulation_iterations=9
+
+############### Bundle Adjustment Options ###############
+# Set this parameter to a value other than NONE if you want to utilize a robust
+# cost function during bundle adjustment. This can increase robustness to outliers
+# during the optimization.
+--bundle_adjustment_robust_loss_function=HUBER
+
+# Set this value to the determine the reprojection error in pixelst at which
+# robustness begins (if a robust cost function is being used).
+--bundle_adjustment_robust_loss_width=10.0
+
+# Set this parameter to change which camera intrinsics should be
+# optimized. Valid options are NONE, ALL, FOCAL_LENGTH, PRINCIPAL_POINTS,
+# RADIAL_DISTORTION, ASPECT_RATIO, and SKEW. This parameter can be set using a
+# bitmask (with no spaces) e.g., FOCAL_LENGTH|RADIAL_DISTORTION
+--intrinsics_to_optimize=FOCAL_LENGTH|RADIAL_DISTORTION
+--constant_camera_intrinsics=true
+
+--linear_solver_type=ceres::DENSE_SCHUR
+# After BA, remove any points that have a reprojection error greater
+# than this.
+--max_reprojection_error_pixels=2.0
+
+############### Triangulation Options ###############
+--min_triangulation_angle_degrees=4.0
+--triangulation_reprojection_error_pixels=15.0
+--bundle_adjust_tracks=true
+
+############### Logging Options ###############
+# Logging verbosity.
+--logtostderr
+# Increase this number to get more verbose logging.
+--v=2
