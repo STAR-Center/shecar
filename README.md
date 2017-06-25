@@ -4,7 +4,7 @@ We present a novel pipeline for hand-eye calibration which combines classical ha
 
 
 # Dependencies
-1. [Theia]. This project highly depends on Theia. After you install Theia successfully, you should compile this project without any trouble.
+1. [Theia]. This project highly depends on Theia. It is worthy mentioning that we are not using the mainstream of theia, to make it easy to reuse, we modify the original code a little, so please be sure you are using the code provided here. After you install Theia successfully, you should compile this project without any trouble.
 
 # How to run
 We have a sample dataset in 'data/', after you compile successfully, you can try this dataset by
@@ -12,4 +12,4 @@ We have a sample dataset in 'data/', after you compile successfully, you can try
 `./bin/SHECAR --flagfile=hand_eye_calibration_flags.txt`
 
 
-[Theia]: https://github.com/sweeneychris/TheiaSfM
+[Theia]: https://github.com/zhixy/TheiaSfM/tree/HandEye
