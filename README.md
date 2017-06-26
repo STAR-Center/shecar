@@ -19,4 +19,5 @@ We have a sample dataset in 'data/', after you compile successfully, you can try
 Authors:
 
 Code & paper: Zhi Xiangyang: https://robotics.shanghaitech.edu.cn/people/zhi 
+
 Paper: Sören Schwertfeger: https://robotics.shanghaitech.edu.cn/people/soeren
